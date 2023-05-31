@@ -13,7 +13,7 @@ In our [paper](***), we present XPhoneBERT, a first pre-trained multilingual mod
 Our XPhoneBERT has the same model architecture as BERT-base, trained using the RoBERTa pre-training approach on 330M phoneme-level sentences from nearly 100 languages and locales. Experimental results show that employing XPhoneBERT as an input phoneme encoder significantly boosts the performance of a strong neural TTS model in terms of naturalness and prosody and also helps produce fairly high-quality speech with limited training data.
 
 # <a name="pre-require"></a> Pre-requisites
-Almost all steps are similar with the original VITS but there are some small changes.
+Almost all steps are similar to the original VITS but there are some small changes.
 
 0. Python >= 3.6
 0. Clone this repository

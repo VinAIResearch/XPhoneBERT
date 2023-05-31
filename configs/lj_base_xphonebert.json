@@ -17,8 +17,8 @@
     "c_kl": 1.0
   },
   "data": {
-    "training_files":"filelists/ljs_train_final.byt5",
-    "validation_files":"filelists/ljs_val_final.byt5",
+    "training_files":"filelists/ljs_audio_text_train_filelist_phoneme.txt",
+    "validation_files":"filelists/ljs_audio_text_val_filelist_phoneme.txt",
     "text_cleaners":["english_cleaners2"],
     "max_wav_value": 32768.0,
     "sampling_rate": 22050,

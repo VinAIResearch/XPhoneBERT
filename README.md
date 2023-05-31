@@ -14,10 +14,10 @@ Our XPhoneBERT has the same model architecture as BERT-base, trained using the R
 
 # <a name="pre-require"></a> Pre-requisites
 Almost all steps are similar with the original VITS but there are some small changes.
+
 0. Python >= 3.6
 0. Clone this repository
 0. Install python requirements. Please refer [requirements.txt](requirements.txt)
-
 0. Preprare dataset 
     1. Download and extract the LJ Speech dataset, then rename or create a link to the dataset folder: `ln -s /path/to/LJSpeech-1.1/wavs DUMMY1`
     1. If you're using your own dataset and language, you need to convert your files into the same format as the LJ Speech dataset. Ensure that your dataset has undergone word segmentation, and text normalization before renaming the dataset folder or create a link to it using the following command: `ln -s /path/to/your_datasets/wavs XPhoneBERT_EN`.
@@ -39,6 +39,7 @@ python train.py -c configs/ljs_base_xphonebert.json -m ljs_base_xphonebert
 # Your own dataset: You need to adjust the config file to appropriate with your dataset.
 ```
 
-
 # <a name="infer"></a> Inference Example
 See [inference.py] (inference.py) file
+
+For users who want to use our XphoneBERT for other models or purposes, we provide a library [text2phonemesequence] (https://github.com/thelinhbkhn2014/Text2PhonemeSequence). This library helps to convert raw text into phoneme sequences that can be used as input for our XPhoneBERT.

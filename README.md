@@ -42,4 +42,4 @@ python train.py -c configs/ljs_base_xphonebert.json -m ljs_base_xphonebert
 # <a name="infer"></a> Inference Example
 See [inference.py] (inference.py) file
 
-For users who want to use our XphoneBERT for other models or purposes, we provide a library [text2phonemesequence] (https://github.com/thelinhbkhn2014/Text2PhonemeSequence). This library helps to convert raw text into phoneme sequences that can be used as input for our XPhoneBERT.
+For users who want to use our XphoneBERT for other models or purposes, we provide a library [text2phonemesequence](https://github.com/thelinhbkhn2014/Text2PhonemeSequence). This library helps to convert raw text into phoneme sequences that can be used as input for our XPhoneBERT.

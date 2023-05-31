@@ -19,8 +19,8 @@ Almost all steps are similar with the original VITS but there are some small cha
 0. Clone this repository
 0. Install python requirements. Please refer [requirements.txt](requirements.txt)
 0. Preprare dataset 
-    1. Download and extract the LJ Speech dataset, then rename or create a link to the dataset folder: `ln -s /path/to/LJSpeech-1.1/wavs DUMMY1`
-    1. If you're using your own dataset and language, you need to convert your files into the same format as the LJ Speech dataset. Ensure that your dataset has undergone word segmentation, and text normalization before renaming the dataset folder or create a link to it using the following command: `ln -s /path/to/your_datasets/wavs XPhoneBERT_EN`.
+    1. Download and extract the LJ Speech dataset, then rename or create a link to the dataset folder: `ln -s /path/to/LJSpeech-1.1/wavs XPhoneBERT_EN`
+    1. If you're using your own dataset and language, you need to convert your files into the same format as the LJ Speech dataset. Ensure that your dataset has undergone word segmentation, and text normalization before renaming the dataset folder or create a link to it using the following command: `ln -s /path/to/your_datasets/wavs DUMMY`.
     1. Next, convert the datasets into phoneme sequences using the following command: `python preprocess.py --input_file path/to/input_file --output_file path/to/output_file --language language_code --cuda`.
 0. Build Monotonic Alignment Search.
 ```sh

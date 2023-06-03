@@ -28,7 +28,7 @@ The general architecture and experimental results of XPhoneBERT can be found in 
 ### Installation <a name="install2"></a>
 - Install `transformers` with pip: `pip install transformers`, or install `transformers` [from source](https://huggingface.co/docs/transformers/installation#installing-from-source).  <br /> 
 
-- Before using XPhoneBERT, users need to convert text to phoneme sequences. To be convenient for users, we build a [Text2PhonemeSequence](https://github.com/thelinhbkhn2014/Text2PhonemeSequence) library that can be installed with pip: `pip install text2phonemesequence`.
+- Before using XPhoneBERT, users need to convert text into phoneme sequences. To make this process more convenient for users, we build a toolkit named [Text2PhonemeSequence](https://github.com/thelinhbkhn2014/Text2PhonemeSequence). This toolkit helps users to convert raw text into phoneme sequences that are used as input for XPhoneBERT. This library can be easily installed with pip: `pip install text2phonemesequence`.
 - Note that sentences need to be performed word segmentation, and text normalization before using the `Text2PhonemeSequence` library.
 ### Example usage <a name="usage2"></a>
 

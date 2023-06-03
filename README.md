@@ -29,7 +29,7 @@ The general architecture and experimental results of XPhoneBERT can be found in 
 - Install `transformers` with pip: `pip install transformers`, or install `transformers` [from source](https://huggingface.co/docs/transformers/installation#installing-from-source).  <br /> 
 
 - Before using XPhoneBERT, users need to convert text into phoneme sequences. To make this process more convenient for users, we build a toolkit named [Text2PhonemeSequence](https://github.com/thelinhbkhn2014/Text2PhonemeSequence). This toolkit helps users to convert raw text into phoneme sequences that are used as input for XPhoneBERT. This library can be easily installed with pip: `pip install text2phonemesequence`.
-- Note that sentences need to be performed word segmentation, and text normalization before using the `Text2PhonemeSequence` library.
+- Note that sentences need to be performed word segmentation, and text normalization before using the `Text2PhonemeSequence` library. This library is built based on the [CharsiuG2P](https://github.com/lingjzhu/CharsiuG2P/tree/main) and the [segments](https://pypi.org/project/segments/) toolkits. You can find the `pretrained_g2p_model` at the CharsiuG2P [repository](https://github.com/lingjzhu/CharsiuG2P/tree/main) and the `language` code in this [document](https://docs.google.com/spreadsheets/d/1y7kisk-UZT9LxpQB0xMIF4CkxJt0iYJlWAnyj6azSBE/edit#gid=557940309).
 ### Example usage <a name="usage2"></a>
 
 ```python

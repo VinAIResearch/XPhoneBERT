@@ -49,5 +49,5 @@
     "n_layers_q": 3,
     "use_spectral_norm": false
   },
-  "bert": "/lustre/scratch/client/vinai/users/linhnt140/phonemeBERT/xphonebert-base"
+  "bert": "vinai/xphonebert-base"
 }

@@ -1,45 +1,77 @@
-# XPhoneBERT :  A Pre-trained Multilingual Model for Phoneme Representations for Text-to-Speech
 
-### Linh The Nguyen, Thinh Pham, and Dat Quoc Nguyen
+#### Table of contents
+1. [Introduction](#introduction)
+2. [Using XPhoneBERT with `transformers`](#transformers)
+	- [Installation](#install2)
+	- [Pre-trained models](#models2)
+	- [Example usage](#usage2)
 
-- [Introduction](#introduction)
-- [Pre-requisites](#pre-require)
-- [Training example](#training)
-- [Inference](#infer)
 
-# <a name="introduction"></a> Introduction
-In our [paper](***), we present XPhoneBERT, a first pre-trained multilingual model for phoneme representations for text-to-speech(TTS).
+# <a name="introduction"></a> XPhoneBERT :  A Pre-trained Multilingual Model for Phoneme Representations for Text-to-Speech 
+
+In our [paper](https://arxiv.org/abs/2305.19709), we present XPhoneBERT, a first pre-trained multilingual model for phoneme representations for text-to-speech(TTS).
 
 Our XPhoneBERT has the same model architecture as BERT-base, trained using the RoBERTa pre-training approach on 330M phoneme-level sentences from nearly 100 languages and locales. Experimental results show that employing XPhoneBERT as an input phoneme encoder significantly boosts the performance of a strong neural TTS model in terms of naturalness and prosody and also helps produce fairly high-quality speech with limited training data.
 
-# <a name="pre-require"></a> Pre-requisites
-Almost all steps are similar to the original VITS but there are some small changes.
+The general architecture and experimental results of XPhoneBERT can be found in our [paper](https://arxiv.org/abs/2305.19709):
 
-0. Python >= 3.6
-0. Clone this repository
-0. Install python requirements. Please refer [requirements.txt](requirements.txt)
-0. Preprare dataset 
-    1. Download and extract the LJ Speech dataset, then rename or create a link to the dataset folder: `ln -s /path/to/LJSpeech-1.1/wavs XPhoneBERT_EN`
-    1. If you're using your own dataset and language, you need to convert your files into the same format as the LJ Speech dataset. Ensure that your dataset has undergone word segmentation, and text normalization before renaming the dataset folder or create a link to it using the following command: `ln -s /path/to/your_datasets/wavs DUMMY`.
-    1. Next, convert the datasets into phoneme sequences using the following command: `python preprocess.py --input_file path/to/input_file --output_file path/to/output_file --language language_code --cuda`.
-0. Build Monotonic Alignment Search.
-```sh
-# Cython-version Monotonoic Alignment Search
-cd monotonic_align
-python setup.py build_ext --inplace
+    @inproceedings{xphonebert,
+    title     = {{XPhoneBERT : A Pre-trained Multilingual Model for Phoneme Representations for Text-to-Speech},
+    author    = {Linh The Nguyen, Thinh Pham, and Dat Quoc Nguyen},
+    booktitle = {Proceedings of the 24th Annual Conference of the International Speech Communication Association (INTERSPEECH)},
+    year      = {2023}
+    }
 
+**Please CITE** our paper when XPhoneBERT is used to help produce published results or is incorporated into other software.
+
+## <a name="transformers"></a> Using XPhoneBERT with `transformers` 
+
+### Installation <a name="install2"></a>
+- Install `transformers` with pip: `pip install transformers`, or [install `transformers` from source](https://huggingface.co/docs/transformers/installation#installing-from-source).  <br /> 
+
+- Before using XPhoneBERT, users need to convert text to phoneme sequences. To be convinient for users, we build a [Text2PhonemeSequence](https://github.com/thelinhbkhn2014/Text2PhonemeSequence) library that can be installed with pip: `pip3 install text2phonemesequence`.
+- Note that sentences need to be performed word segmentation, and text normalization before using the `Text2PhonemeSequence` library.
+### Example usage <a name="usage2"></a>
+
+```python
+from transformers import AutoModel, AutoTokenizer
+from text2phonemesequence import Text2PhonemeSequence
+
+tokenizer = AutoTokenizer.from_pretrained("vinai/xphonebert-base")
+xphonebert = AutoModel.from_pretrained("vinai/xphonebert-base")
+# Load Text2PhonemeSequence
+text2phone_model = Text2PhonemeSequence(pretrained_g2p_model='charsiu/g2p_multilingual_byT5_tiny_16_layers_100', language='eng-us', is_cuda=False)
+
+# INPUT TEXT MUST BE ALREADY WORD-SEGMENTED AND TEXT NORMALIZED
+sentence = 'it has used other treasury law enforcement agents on special experiments in building and route surveys in places to which the president frequently travels .'  
+input_phonemes = text2phone_model.infer_sentence(sentence)
+
+input_ids = tokenizer(input_phonemes, return_tensors="pt")
+
+with torch.no_grad():
+    features = xphonebert(**input_ids)
 ```
 
+## License
+    
+	MIT License
 
-# <a name="training"></a> Training Example
-```sh
-# LJ Speech
-python train.py -c configs/ljs_base_xphonebert.json -m ljs_base_xphonebert
+	Copyright (c) 2023 VinAI Research
 
-# Your own dataset: You need to adjust the config file to appropriate with your dataset.
-```
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
 
-# <a name="infer"></a> Inference Example
-See [inference.py] (inference.py) file
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
 
-For users who want to use our XphoneBERT for other models or purposes, we provide a library [text2phonemesequence](https://github.com/thelinhbkhn2014/Text2PhonemeSequence). This library helps to convert raw text into phoneme sequences that can be used as input for our XPhoneBERT.
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.

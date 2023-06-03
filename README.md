@@ -3,7 +3,6 @@
 1. [Introduction](#introduction)
 2. [Using XPhoneBERT with `transformers`](#transformers)
 	- [Installation](#install2)
-	- [Pre-trained models](#models2)
 	- [Example usage](#usage2)
 
 

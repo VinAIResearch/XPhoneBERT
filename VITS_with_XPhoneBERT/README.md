@@ -6,8 +6,7 @@
 - [Inference](#infer)
 
 # <a name="introduction"></a> Introduction
-We provide a procedure to help you train VITS with our XPhoneBERT on the LJSpeech dataset or your own dataset. Almost all steps are similar to the original VITS but there are some small changes.
-Almost all steps are similar to the original VITS but there are some small changes. 
+We provide a procedure to help you train [VITS](https://github.com/jaywalnut310/vits) with our XPhoneBERT on the LJSpeech dataset or your own dataset. Almost all steps are similar to the original [VITS](https://github.com/jaywalnut310/vits) but there are some small changes. 
 # <a name="pre-require"></a> Pre-requisites
 
 0. Python >= 3.6

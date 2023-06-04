@@ -32,7 +32,7 @@ def get_inputs(text, model, tokenizer_xphonebert):
 hps = utils.get_hparams_from_file("./configs/lj_base_xphonebert.json")
 tokenizer_xphonebert = AutoTokenizer.from_pretrained(hps.bert)
 # Load Text2PhonemeSequence
-model = Text2PhonemeSequence(pretrained_g2p_model='charsiu/g2p_multilingual_byT5_tiny_16_layers_100', language='eng-us', is_cuda=True)
+model = Text2PhonemeSequence(language='eng-us', is_cuda=True)
 net_g = SynthesizerTrn(
     hps.bert,
     hps.data.filter_length // 2 + 1,

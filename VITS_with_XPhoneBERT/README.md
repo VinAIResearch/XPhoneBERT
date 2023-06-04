@@ -15,7 +15,7 @@ We provide a procedure to help you train [VITS](https://github.com/jaywalnut310/
 0. Preprare dataset 
     1. Download and extract the LJ Speech dataset, then rename or create a link to the dataset folder: `ln -s /path/to/LJSpeech-1.1/wavs XPhoneBERT_EN`
     1. If you're using your own dataset and language, you need to convert your files into the same format as the LJ Speech dataset. Ensure that your dataset has undergone word segmentation, and text normalization before renaming the dataset folder or create a link to it using the following command: `ln -s /path/to/your_datasets/wavs DUMMY`.
-    1. Next, convert the datasets into phoneme sequences using the following command: `python preprocess.py --input_file path/to/input_file --output_file path/to/output_file --language language_code --cuda`.
+    1. Next, convert the datasets into phoneme sequences using the following command: `python preprocess.py --input_file path/to/input_file --output_file path/to/output_file --language language_code --batch_size 64 --cuda`.
 0. Build Monotonic Alignment Search.
 ```sh
 # Cython-version Monotonoic Alignment Search

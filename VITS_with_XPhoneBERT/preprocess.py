@@ -9,6 +9,7 @@ if __name__ == '__main__':
   parser.add_argument("--cuda", default=False, action='store_true')
   parser.add_argument("--pretrained_g2p_model", default="charsiu/g2p_multilingual_byT5_tiny_16_layers_100")
   parser.add_argument("--tokenizer", default="google/byt5-small")
+  parser.add_argument("--batch_size", default=64)
 
   args = parser.parse_args()
 
@@ -16,7 +17,7 @@ if __name__ == '__main__':
   model = Text2PhonemeSequence(pretrained_g2p_model=args.pretrained_g2p_model, tokenizer=args.tokenizer, language=args.language, is_cuda=args.cuda)
   
   # Processing data
-  model.infer_dataset(input_file = args.input_file, output_file=args.output_file)
+  model.infer_dataset(input_file = args.input_file, output_file=args.output_file, batch_size=args.batch_size)
   
 
 

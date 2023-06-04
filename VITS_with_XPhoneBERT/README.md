@@ -31,7 +31,7 @@ pip install -r requirements.txt`
     - wavs
       - audio files in .wav format
   - The `.txt` files in the `text` directory contain text transcripts for training, validation, and test respectively. The format for each `.txt` file is:
-  - `DUMMY/file_a.wav|text transcript of the file_a.wav (that is already word-segmented and text-normalized if applicable)`
+    - `DUMMY/file_a.wav|text transcript of the file_a.wav (that is already word-segmented and text-normalized if applicable)`
   - For example, in the LJSpeech dataset: `DUMMY/LJ022-0023.wav|The overwhelming majority of people in this country know how to sift the wheat from the chaff in what they hear and what they read`
 - Move `.txt` files to the `filelists` directory, then create a link to the dataset's wavs folder and run the `preprocess.py` file similar to the LJspeech dataset.
 

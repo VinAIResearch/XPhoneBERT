@@ -3,8 +3,8 @@ from text2phonemesequence import Text2PhonemeSequence
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
-  parser.add_argument("--input_file", default="filelists/ljs_audio_text_train_filelist_phoneme_sequence.txt")
-  parser.add_argument("--output_file", default="filelists/ljs_audio_text_val_filelist_phoneme_sequence.txt")
+  parser.add_argument("--input_file", default="filelists/ljs_audio_text_train_filelist_normalization.txt")
+  parser.add_argument("--output_file", default="filelists/ljs_audio_text_train_filelist_phoneme_sequence.txt")
   parser.add_argument("--language", default="eng-us")
   parser.add_argument("--cuda", default=False, action='store_true')
   parser.add_argument("--pretrained_g2p_model", default="charsiu/g2p_multilingual_byT5_small_100")

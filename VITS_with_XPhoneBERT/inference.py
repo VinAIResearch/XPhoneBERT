@@ -42,7 +42,7 @@ _ = net_g.eval()
 
 _ = utils.load_checkpoint("./logs/lj_base_xphonebert/G_161200.pth", net_g, None)
 
-f = open('./filelists/ljs_audio_text_test_filelist_phones.txt', 'r')
+f = open('./filelists/ljs_audio_text_test_filelist_phoneme_sequence.txt', 'r')
 list_lines = f.readlines()
 f.close()
 for line in tqdm(list_lines):

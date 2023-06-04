@@ -1,22 +1,12 @@
-
-#### Table of contents
-1. [Introduction](#introduction)
-2. [Using XPhoneBERT with `transformers`](#transformers)
-	- [Installation](#install2)
-	- [Example usage](#usage2)
-
-
 # <a name="introduction"></a> XPhoneBERT :  A Pre-trained Multilingual Model for Phoneme Representations for Text-to-Speech 
 
-In our [paper](https://arxiv.org/abs/2305.19709), we present XPhoneBERT, a first pre-trained multilingual model for phoneme representations for text-to-speech(TTS).
+XPhoneBERT is the first pre-trained multilingual model for phoneme representations for text-to-speech(TTS). XPhoneBERT has the same model architecture as BERT-base, trained using the RoBERTa pre-training approach on 330M phoneme-level sentences from nearly 100 languages and locales. Experimental results show that employing XPhoneBERT as an input phoneme encoder significantly boosts the performance of a strong neural TTS model in terms of naturalness and prosody and also helps produce fairly high-quality speech with limited training data.
 
-Our XPhoneBERT has the same model architecture as BERT-base, trained using the RoBERTa pre-training approach on 330M phoneme-level sentences from nearly 100 languages and locales. Experimental results show that employing XPhoneBERT as an input phoneme encoder significantly boosts the performance of a strong neural TTS model in terms of naturalness and prosody and also helps produce fairly high-quality speech with limited training data.
-
-The general architecture and experimental results of XPhoneBERT can be found in our [paper](https://arxiv.org/abs/2305.19709):
+The general architecture and experimental results of XPhoneBERT can be found in [our INTERSPEECH 2023 paper](https://arxiv.org/abs/2305.19709):
 
     @inproceedings{xphonebert,
-    title     = {{XPhoneBERT : A Pre-trained Multilingual Model for Phoneme Representations for Text-to-Speech},
-    author    = {Linh The Nguyen, Thinh Pham, and Dat Quoc Nguyen},
+    title     = {{XPhoneBERT: A Pre-trained Multilingual Model for Phoneme Representations for Text-to-Speech}},
+    author    = {Linh The Nguyen and Thinh Pham and Dat Quoc Nguyen},
     booktitle = {Proceedings of the 24th Annual Conference of the International Speech Communication Association (INTERSPEECH)},
     year      = {2023}
     }
@@ -26,23 +16,41 @@ The general architecture and experimental results of XPhoneBERT can be found in 
 ## <a name="transformers"></a> Using XPhoneBERT with `transformers` 
 
 ### Installation <a name="install2"></a>
-- Install `transformers` with pip: `pip install transformers`, or install `transformers` [from source](https://huggingface.co/docs/transformers/installation#installing-from-source).  <br /> 
 
-- Before using XPhoneBERT, it is necessary to convert text into phoneme sequences. To make this process more convenient for users, we build a toolkit named [Text2PhonemeSequence](https://github.com/thelinhbkhn2014/Text2PhonemeSequence). This toolkit helps users to convert raw text into phoneme sequences that are used as input for XPhoneBERT. Our library is built based on the [CharsiuG2P](https://github.com/lingjzhu/CharsiuG2P/tree/main) and the [segments](https://pypi.org/project/segments/) toolkits. You can find the `pretrained_g2p_model` at the CharsiuG2P [repository](https://github.com/lingjzhu/CharsiuG2P/tree/main) and the `language` code is available in this [document](https://docs.google.com/spreadsheets/d/1y7kisk-UZT9LxpQB0xMIF4CkxJt0iYJlWAnyj6azSBE/edit#gid=557940309). To install the `Text2PhonemeSequence` library, simply use pip: `pip install text2phonemesequence`.
-- Note that sentences need to be performed word segmentation, and text normalization before using the `Text2PhonemeSequence` library. 
+- Install `transformers` with pip: `pip install transformers`, or install `transformers` [from source](https://huggingface.co/docs/transformers/installation#installing-from-source). 
+
+- Install `text2phonemesequence`: `pip install text2phonemesequence` <br>  Our [`text2phonemesequence`](https://github.com/thelinhbkhn2014/Text2PhonemeSequence) package is to convert text sequences into phoneme-level sequences, employed to construct our multilingual phoneme-level pre-training data. We build `text2phonemesequence` by incorporating the [CharsiuG2P](https://github.com/lingjzhu/CharsiuG2P/tree/main) and the [segments](https://pypi.org/project/segments/) toolkits that perform text-to-phoneme conversion and phoneme segmentation, respectively. 
+
+- **Notes**
+
+	-	Initializing `text2phonemesequence` for each language requires its corresponding ISO 639-3 code. The ISO 639-3 codes of supported languages are available at [HERE](https://github.com/VinAIResearch/XPhoneBERT/blob/main/LanguageISO639-3Codes.md).
+	
+	- `text2phonemesequence` takes a word-segmented sequence as input. And users might also perform text normalization on the word-segmented sequence before feeding into `text2phonemesequence`. When creating our pre-training data, we perform word and sentence segmentation on all text documents in each language by using the [spaCy](https://spacy.io) toolkit, except for Vietnamese where we employ the [VnCoreNLP](https://github.com/vncorenlp/VnCoreNLP) toolkit. We also use the text normalization component from the [NVIDIA NeMo toolkit](https://github.com/NVIDIA/NeMo) for English, German, Spanish and Chinese, and the [Vinorm](https://github.com/v-nhandt21/Vinorm) text normalization package for Vietnamese.
+
+
+### <a name="models2"></a> Pre-trained model 
+
+Model | #params | Arch. | Max length | Pre-training data
+---|---|---|---|---
+`vinai/xphonebert-base` | 88M | base | 512 | 330M phoneme-level sentences from nearly 100 languages and locales
+
+
 ### Example usage <a name="usage2"></a>
 
 ```python
 from transformers import AutoModel, AutoTokenizer
 from text2phonemesequence import Text2PhonemeSequence
 
-tokenizer = AutoTokenizer.from_pretrained("vinai/xphonebert-base")
+# Load XPhoneBERT model and its tokenizer
 xphonebert = AutoModel.from_pretrained("vinai/xphonebert-base")
-# Load Text2PhonemeSequence
-text2phone_model = Text2PhonemeSequence(pretrained_g2p_model='charsiu/g2p_multilingual_byT5_tiny_16_layers_100', language='eng-us', is_cuda=False)
+tokenizer = AutoTokenizer.from_pretrained("vinai/xphonebert-base")
 
-# INPUT TEXT MUST BE ALREADY WORD-SEGMENTED AND TEXT NORMALIZED
-sentence = 'it has used other treasury law enforcement agents on special experiments in building and route surveys in places to which the president frequently travels .'  
+# Load Text2PhonemeSequence
+text2phone_model = Text2PhonemeSequence(language='eng-us', is_cuda=True)
+
+# Input sequence that is already word-segmented (and text-normalized if applicable)
+sentence = 'It has used other treasury law enforcement agents on special experiments in building and route surveys in places to which the president frequently travels .'  
+
 input_phonemes = text2phone_model.infer_sentence(sentence)
 
 input_ids = tokenizer(input_phonemes, return_tensors="pt")

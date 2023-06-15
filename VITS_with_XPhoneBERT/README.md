@@ -15,7 +15,7 @@ pip install -r requirements.txt`
 
 - Download and extract the LJ Speech dataset, then create a link to the dataset's wavs folder: `ln -s /path/to/LJSpeech-1.1/wavs DUMMY`
 
-- Convert LJ Speech text transcriptions into phoneme sequences using following commands:
+- Convert LJ Speech text transcriptions into phoneme sequences using the following commands:
 	- `python preprocess.py --input_file filelists/ljs_audio_text_train_filelist_preprocessed.txt --output_file filelists/ljs_audio_text_train_filelist_phoneme_sequence.txt --language eng-us --batch_size 64 --cuda`
 	- `python preprocess.py --input_file filelists/ljs_audio_text_val_filelist_preprocessed.txt --output_file filelists/ljs_audio_text_val_filelist_phoneme_sequence.txt --language eng-us --batch_size 64 --cuda`
 
@@ -23,17 +23,33 @@ pip install -r requirements.txt`
 #### For another TTS dataset
 
 - Prepare a dataset with the following structure:
-  - Dataset_folder:
-    - text
-      - training_texts_file.txt
-      - validation_texts_file.txt
-      - test_texts_file.txt
-    - wavs
-      - audio files in .wav format
-  - The `.txt` files in the `text` directory contain text transcripts for training, validation, and test respectively. The format for each `.txt` file is:
-    - `DUMMY/file_a.wav|text transcript of the file_a.wav (that is already word-segmented and text-normalized if applicable)`
-  - For example, in the LJSpeech dataset: `DUMMY/LJ022-0023.wav|The overwhelming majority of people in this country know how to sift the wheat from the chaff in what they hear and what they read`
-- Move `.txt` files to the `filelists` directory, then create a link to the dataset's wavs folder and run the `preprocess.py` file similar to the LJspeech dataset.
+
+```
+Your_dataset_directory/
+├── texts
+    ├── training_texts_file.txt
+    ├── validation_texts_file.txt
+    ├── test_texts_file.txt
+├── wavs
+    ├── audio_1.wav
+    ├── ...audio files in .wav format...
+```
+
+  - The `.txt` files in the `texts` directory contain text transcripts for training, validation and test, respectively. Each `.txt` file is formatted as:
+  
+    - `DUMMY/audio_1.wav|text transcript of the audio_1.wav, in which the text transcript is already word-segmented ( and text-normalized if applicable )`
+    
+    - For example, in the LJSpeech dataset: `DUMMY/LJ022-0023.wav|The overwhelming majority of people in this country know how to sift the wheat from the chaff in what they hear and what they read`
+
+- Create a link to your dataset's `wavs` directory:
+
+	- `ln -s /path/to/Your_dataset_directory/wavs DUMMY`
+
+- Move/copy your `.txt` training, validation and test files to the `filelists` directory, and then run the `preprocess.py` file (similar to as run for the LJSpeech dataset), for example:
+
+	- `cp /path/to/Your_dataset_directory/texts/*.txt /path/to/VITS_with_XPhoneBERT/filelists/`
+	- `python preprocess.py --input_file filelists/training_texts_file.txt --output_file filelists/training_phoneme_sequences.txt --language eng-us --batch_size 64 --cuda`
+	- `python preprocess.py --input_file filelists/validation_texts_file.txt --output_file filelists/validation_phoneme_sequences.txt --language eng-us --batch_size 64 --cuda`
 
 
 ### Building Monotonic Alignment Search

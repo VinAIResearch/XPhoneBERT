@@ -51,6 +51,7 @@ python train.py -c configs/ljs_base_xphonebert.json -m ljs_base_xphonebert
 
 # Your own dataset: You need to adjust the config file to appropriate with your dataset.
 ```
+In our settings, we use 4 A100 GPUs (40G for each) for training. If users have a smaller computational resource, you need to decrease the batch size to avoid the Out-of-memory problem (it is advisable to decrease the initial learning rate accordingly)
 
 ### <a name="infer"></a> Inference Example
 See [inference.py](inference.py) file

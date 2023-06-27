@@ -119,11 +119,11 @@ def run(rank, n_gpus, hps):
 
     for epoch in range(epoch_str, hps.train.epochs + 1):
         if epoch < int(hps.train.epochs / 4):
-            for child in net_g.enc_p.bert.children():
+            for child in net_g.module.enc_p.bert.children():
                 for param in child.parameters():
                     param.requires_grad = False
         else:
-            for child in net_g.enc_p.bert.children():
+            for child in net_g.module.enc_p.bert.children():
                 for param in child.parameters():
                     param.requires_grad = True
         if rank == 0:

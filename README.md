@@ -32,7 +32,7 @@ The general architecture and experimental results of XPhoneBERT can be found in 
 
 Model | #params | Arch. | Max length | Pre-training data
 ---|---|---|---|---
-`vinai/xphonebert-base` | 88M | base | 512 | 330M phoneme-level sentences from nearly 100 languages and locales
+[`vinai/xphonebert-base`](https://huggingface.co/vinai/xphonebert-base) | 88M | base | 512 | 330M phoneme-level sentences from nearly 100 languages and locales
 
 
 ### Example usage <a name="usage2"></a>
